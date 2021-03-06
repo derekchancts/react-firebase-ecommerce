@@ -11,11 +11,12 @@ body {
 html,
 body,
 #root,
-.App {
+.App,
+.fullHeight {
   height: 100%;
 }
 
-// target the bore and after pseudo elements
+// target the bofore and after pseudo elements
 *,
 ::before,
 ::after {
