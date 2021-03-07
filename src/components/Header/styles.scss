@@ -44,9 +44,22 @@
         padding: 0;
       }
 
+      ul {
+        // display: flex;
+        // flex-wrap: wrap;
+        // align-content: space-around;
+      }
+
       li {
         list-style-type: none;
+        // padding: 8px;
+        display: inline-block;
+        margin-right: 1.5rem;
 
+        &:last-child {
+          margin-right: 0;
+        }
+        
         a {
           font-size: 1.8rem;
           line-height: 1;
@@ -55,6 +68,7 @@
           text-transform: uppercase;
         }
       }
+
     }
     
   }
