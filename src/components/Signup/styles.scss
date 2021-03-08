@@ -1,4 +1,4 @@
-.signin {
+.signup {
   display: block;
   width: 100%;
   max-width: 40.0rem;
@@ -16,18 +16,14 @@
       text-align: center;
       display: block;
       width: 100%;
-     //  margin: 0 auto 3rem;   // make sure h2 does not get any margin and padding 
       margin: 0 auto;   // make sure h2 does not get any margin and padding 
       padding: 0 auto;  // inherited from it's parent tag
     }
 
-    .socialSignin {
-      margin-top: 0.5rem;
+    .formWrap {
+      // margin: 3rem auto 0;
+      margin-top: 3rem;
     }
 
-  }
-
-  .formWrap {
-    margin-top: 3rem;
   }
 }
