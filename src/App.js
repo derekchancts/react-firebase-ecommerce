@@ -24,10 +24,6 @@ class App extends Component {
     };
   }
 
-  // state = {
-  //   currentUser: null
-  // }
-
   authListener = null;
 
   componentDidMount() {
@@ -47,19 +43,6 @@ class App extends Component {
       this.setState({
         ...initialState
       });
-
-      // if (!userAuth) {
-      //   this.setState({
-      //     ...initialState
-      //   })
-      //   // this.setState({
-      //   //   currentUser: null
-      //   // })
-      // }
-
-      // this.setState({
-      //   currentUser: userAuth
-      // })
 
     });
   }
