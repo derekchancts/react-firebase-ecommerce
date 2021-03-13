@@ -1,13 +1,33 @@
-
-import {connect} from 'react-redux';
+// import { useEffect } from 'react';
+// import {connect} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { signoutUser } from '../../redux/User/user.actions';
 import './styles.scss';
 import {Link} from 'react-router-dom';
-import {auth} from '../../firebase/utils';
+// import {auth} from '../../firebase/utils';
 
 import Logo from '../../assets/logo.png';
 
+
+// const mapStateToProps = ({ user }) => ({
+//   currentUser: user.currentUser
+// })
+
+const mapState = ({ user }) => ({
+  currentUser: user.currentUser
+})
+
+
 const Header = (props) => {
-  const {currentUser} = props;
+  // const {currentUser} = props;
+  const {currentUser} = useSelector(mapState);
+  const dispatch = useDispatch();
+
+
+  const handleSignOut = () => {
+    dispatch(signoutUser())
+  }
+
 
   return (
     <header className='header'>
@@ -25,7 +45,8 @@ const Header = (props) => {
                 <Link to='/dashboard'>My Account</Link>
               </li>
               <li>
-                <span onClick={() => auth.signOut()}>LogOut</span>
+                {/* <span onClick={() => auth.signOut()}>LogOut</span> */}
+                <span onClick={handleSignOut}>LogOut</span>
               </li>
             </ul>
           )}
@@ -50,8 +71,9 @@ Header.defaultProps = {
   currentUser: null,
 };
 
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser
-})
+// const mapStateToProps = ({ user }) => ({
+//   currentUser: user.currentUser
+// })
 
-export default connect(mapStateToProps, null)(Header);
+// export default connect(mapStateToProps, null)(Header);
+export default Header;
