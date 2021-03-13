@@ -10,9 +10,9 @@ export const firestore = firebase.firestore();
 
 
 // SIGN IN WITH GOOGLE OAUTH
-const GoogleProvider = new firebase.auth.GoogleAuthProvider();
+export const GoogleProvider = new firebase.auth.GoogleAuthProvider();
 // GoogleProvider.setCustomParameters({ prompt: 'select_account' });
-export const signInWithGoogle = () => auth.signInWithPopup(GoogleProvider);
+// export const signInWithGoogle = () => auth.signInWithPopup(GoogleProvider);
 
 
 // STORE USER PROFILE TO DATABASE

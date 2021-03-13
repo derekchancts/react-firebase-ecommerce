@@ -3,6 +3,21 @@
     {
       "type": "aws-sam",
       "request": "direct-invoke",
+      "name": "React-Firebase-Ecommerce:src/redux/User/user.actions.signUpUser (nodejs12.x)",
+      "invokeTarget": {
+        "target": "code",
+        "projectRoot": "\\Users\\Chan\\Desktop\\code\\React-Firebase-Ecommerce\\ecommerce",
+        "lambdaHandler": "src/redux/User/user.actions.signUpUser"
+      },
+      "lambda": {
+        "runtime": "nodejs12.x",
+        "payload": {},
+        "environmentVariables": {}
+      }
+    },
+    {
+      "type": "aws-sam",
+      "request": "direct-invoke",
       "name": "React-Firebase-Ecommerce:src/firebase/utils.signInWithGoogle (nodejs12.x)",
       "invokeTarget": {
         "target": "code",

@@ -1,62 +1,64 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {Link, withRouter}from 'react-router-dom'
+import { signInUser, signInWithGoogle, resetAllAuthForms } from '../../redux/User/user.actions';
 
 import './styles.scss';
-import {auth, signInWithGoogle} from '../../firebase/utils';
+// import {auth, signInWithGoogle} from '../../firebase/utils';
+// import { signInWithGoogle } from '../../firebase/utils';
 
 import AuthWrapper from '../AuthWrapper';
 import FormInput from '../forms/FormInput';
 import Button from '../forms/Button';
 
-// const initialState = {
-//   email: '',
-//   password: '',
-// };
+
+const mapState = ({ user }) => ({
+  signInSuccess: user.signInSuccess
+})
+
 
 const SignIn = (props) => {
+  const { signInSuccess } = useSelector(mapState); // useSelector to subscribe to selected state in Redux
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
 
-  // const handleChange = (e) => {
-    // const {name, value} = e.target;
-    // this.setState({
-    //   [name]: value,
-    // });
-    // this.setState({
-    //   [e.target.name]: e.target.value
-    // })
 
-  //   if (e.target.name === "email") {
-  //     setEmail(e.target.value)
-  //   }
-
-  //   if (e.target.name === "password") {
-  //     setPassword(e.target.value)
-  //   }
-  // };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // const {email, password} = this.state;
-
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
-      // const { user } = await auth.signInWithEmailAndPassword(email, password);
-      // console.log(user)
-      // this.setState({
-      //   ...initialState,
-      // });
+  useEffect(() => {
+    if (signInSuccess ) {
       setEmail('');
       setPassword('');
-
+      dispatch(resetAllAuthForms());
       props.history.push('/');
+    }
+  },[signInSuccess]);
 
+  
+  // const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch(signInUser({email, password}));
+
+    /*
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+        // const { user } = await auth.signInWithEmailAndPassword(email, password);
+        // console.log(user)
+      setEmail('');
+      setPassword('');
+      props.history.push('/');
     } catch (error) {
       console.log(error);
-    }
+    } */
   };
 
-    // const {email, password} = this.state;
+
+    const handleGoogleSignIn = () => {
+      dispatch(signInWithGoogle());
+    }
+
 
     const configAuthWrapper = {
       headline: 'Login'
@@ -122,7 +124,7 @@ const SignIn = (props) => {
 
             <div className='socialSignin'>
               <div className='row'>
-                <Button onClick={signInWithGoogle}>Sign in with Google</Button>
+                <Button onClick={handleGoogleSignIn}>Sign in with Google</Button>
               </div>
             </div>
 

@@ -3,7 +3,8 @@ import {Route, Switch, Redirect} from 'react-router-dom';
 import {auth, handleUserProfile} from './firebase/utils';
 
 // IMPORT REDUX
-import {connect} from 'react-redux';
+// import {connect} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {setCurrentUser} from './redux/User/user.actions';
 
 // HOC
@@ -23,21 +24,22 @@ import './default.scss';
 
 const App = (props) => {
   // authListener = null;
-  const {setCurrentUser, currentUser} = props;
+  // const {setCurrentUser, currentUser} = props;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const authListener = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
         const userRef = await handleUserProfile(userAuth);
         userRef.onSnapshot((snapshot) => {
-          setCurrentUser({
+          dispatch(setCurrentUser({
             id: snapshot.id,
             ...snapshot.data(),
-          });
+          }));
         });
       }
-      setCurrentUser(userAuth); // can pass userAuth object here. As by default, it will return
-      // null if there's no user
+      dispatch(setCurrentUser(userAuth)); // can pass userAuth object here. As by default, it will return
+                                // null if there's no user
     });
 
     return () => {
@@ -69,42 +71,12 @@ const App = (props) => {
   }
   */
 
-  // const {currentUser} = props;
 
   return (
     <div className='App'>
       <Switch>
         {/* <Route exact path='/' component={Homepage} />
           <Route path='/registration' component={Registration} /> */}
-
-        {/* <Route
-          exact
-          path='/'
-          render={() =>
-            !currentUser ? (
-              <Redirect to='/login' />
-            ) : (
-              // <HomepageLayout currentUser={currentUser}>
-              <HomepageLayout>
-                <Homepage />
-              </HomepageLayout>
-            )
-          }
-        />
-        <Route
-          path='/registration'
-          render={() =>
-            currentUser ? (
-              <Redirect to='/' />
-            ) : (
-              // <MainLayout currentUser={currentUser}>
-              <MainLayout>
-                <Registration />
-              </MainLayout>
-            )
-          }
-        />
-         */}
 
         <Route
           exact
@@ -158,12 +130,13 @@ const App = (props) => {
   );
 };
 
-const mapStateToProps = ({user}) => ({
-  currentUser: user.currentUser,
-});
+// const mapStateToProps = ({user}) => ({
+//   currentUser: user.currentUser,
+// });
 
-const mapDispatchToProps = (dispatch) => ({
-  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
-});
+// const mapDispatchToProps = (dispatch) => ({
+//   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+// export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
