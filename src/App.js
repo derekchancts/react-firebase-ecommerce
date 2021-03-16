@@ -1,11 +1,14 @@
 import React, {useEffect} from 'react';
-import {Route, Switch, Redirect} from 'react-router-dom';
-import {auth, handleUserProfile} from './firebase/utils';
+// import {Route, Switch, Redirect} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
+// import {auth, handleUserProfile} from './firebase/utils';
 
 // IMPORT REDUX
 // import {connect} from 'react-redux';
-import { useSelector, useDispatch } from 'react-redux';
-import {setCurrentUser} from './redux/User/user.actions';
+// import { useSelector, useDispatch } from 'react-redux';
+// import { setCurrentUser, checkUserSession } from './redux/User/user.actions';
+import { useDispatch } from 'react-redux';
+import { checkUserSession } from './redux/User/user.actions';
 
 // HOC
 import WithAuth from './hoc/withAuth';
@@ -27,6 +30,13 @@ const App = (props) => {
   // const {setCurrentUser, currentUser} = props;
   const dispatch = useDispatch();
 
+
+  useEffect(() => {
+    dispatch(checkUserSession());
+  },[])
+
+
+  /*
   useEffect(() => {
     const authListener = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
@@ -46,6 +56,8 @@ const App = (props) => {
       authListener(); // onAuthStateChanged returns a function that we can call to unsubsribe the auth event listener
     };
   }, []);
+  */
+
 
   /*
   componentDidMount() {

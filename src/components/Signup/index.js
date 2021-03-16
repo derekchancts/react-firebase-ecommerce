@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {withRouter} from 'react-router-dom';
-import { signUpUser, resetAllAuthForms } from '../../redux/User/user.actions';
+// import {withRouter} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { signUpUser, resetAllAuthForms, signUpStart } from '../../redux/User/user.actions';
 import './styles.scss';
 
 // import {auth, handleUserProfile} from '../../firebase/utils';
@@ -11,13 +12,18 @@ import Button from '../forms/Button';
 
 
 const mapState = ({ user }) => ({
-  signUpSuccess: user.signUpSuccess,
-  signUpError: user.signUpError
+  // signUpSuccess: user.signUpSuccess,
+  // signUpError: user.signUpError
+  currentUser: user.currentUser,
+  userErr: user.userErr
 })
 
 const Signup = (props) => {
-  const { signUpSuccess, signUpError } = useSelector(mapState);
+  // const { signUpSuccess, signUpError } = useSelector(mapState);
+  const { currentUser, userErr } = useSelector(mapState);
   const dispatch = useDispatch();
+
+  const history = useHistory()
 
   const [displayName, setDisplayName] = useState('');
   const [email, setEmail] = useState('');
@@ -35,26 +41,27 @@ const Signup = (props) => {
 
 
   useEffect(() => {
-    if(signUpSuccess) {
+    if(currentUser) {
       resetValues();
-      dispatch(resetAllAuthForms());
-      props.history.push('/')
+      // dispatch(resetAllAuthForms());
+      history.push('/')
     }
-  }, [signUpSuccess])
+  }, [currentUser])
 
 
   useEffect(() => {
-    if (Array.isArray(signUpError) && signUpError.length > 0) {
-      setErrors(signUpError)
+    if (Array.isArray(userErr) && userErr.length > 0) {
+      setErrors(userErr)
     }
-  },[signUpError])
+  },[userErr])
 
 
   // const handleSubmit = async (e) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(signUpUser({displayName, email, password, confirmPassword}));
+    // dispatch(signUpUser({displayName, email, password, confirmPassword}));
+    dispatch(signUpStart({displayName, email, password, confirmPassword}));
    
     // if (password !== confirmPassword) {
     //   const err = ["Password Don't match"];
@@ -181,4 +188,5 @@ const Signup = (props) => {
   );
 };
 
-export default withRouter(Signup);
+// export default withRouter(Signup);
+export default Signup;
