@@ -1,7 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {withRouter} from 'react-router-dom';
-import { resetPassword, resetAllAuthForms } from '../../redux/User/user.actions';
+// import {withRouter} from 'react-router-dom';  // withRouter when we are using a class/state based component
+import { useHistory } from 'react-router-dom';
+
+// import { resetPassword, resetAllAuthForms } from '../../redux/User/user.actions';
+import { resetPasswordStart, resetUserState } from '../../redux/User/user.actions';
 import './stytles.scss';
 // import {auth} from '../../firebase/utils';
 
@@ -11,39 +14,54 @@ import Button from '../forms/Button';
 
 
 const mapState = ({ user }) => ({
+  // resetPasswordSuccess: user.resetPasswordSuccess,
+  // resetPasswordError: user.resetPasswordError,
   resetPasswordSuccess: user.resetPasswordSuccess,
-  resetPasswordError: user.resetPasswordError
+  userErr: user.userErr
 })
 
 const EmailPassword = (props) => {
-  const { resetPasswordSuccess, resetPasswordError} = useSelector(mapState);
   const dispatch = useDispatch();
 
+  const history = useHistory()
+
+  // const { resetPasswordSuccess, resetPasswordError} = useSelector(mapState);
+  const { resetPasswordSuccess, userErr } = useSelector(mapState);
+  
   const [email, setEmail] = useState('');
   const [errors, setErrors] = useState([]);
 
 
   useEffect(() => {
     if (resetPasswordSuccess) {
-      console.log('Password Reset');
-      dispatch(resetAllAuthForms());
-      props.history.push('/login');
+      // dispatch(resetAllAuthForms());
+      dispatch(resetUserState());
+
+      // props.history.push('/login');
+      history.push('/login');
     }
   },[resetPasswordSuccess])
 
 
+  // useEffect(() => {
+  //   if (Array.isArray(resetPasswordError) && resetPasswordError.length > 0) {
+  //     setErrors(resetPasswordError)
+  //   }
+  // },[resetPasswordError])
   useEffect(() => {
-    if (Array.isArray(resetPasswordError) && resetPasswordError.length > 0) {
-      setErrors(resetPasswordError)
+    if (Array.isArray(userErr) && userErr.length > 0) {
+      setErrors(userErr)
     }
-  },[resetPasswordError])
+  },[userErr])
+
 
 
   // const handleSubmit = async (e) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(resetPassword({ email }));
+    // dispatch(resetPassword({ email }));
+    dispatch(resetPasswordStart({ email }));
 
     // try {
     //   const config = {
@@ -98,4 +116,5 @@ const EmailPassword = (props) => {
   );
 };
 
-export default withRouter(EmailPassword);
+// export default withRouter(EmailPassword);
+export default EmailPassword;
