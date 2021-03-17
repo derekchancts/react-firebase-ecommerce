@@ -8,8 +8,8 @@ export const checkUserIsAdmin = currentUser => {
 
 
   const { userRoles } = currentUser;
-  if ( userRoles.includes('admin')) {
-    console.log('not Admin')
+  if (userRoles.includes('admin')) {
+    console.log('Admin role')
     return true;  // see if user is an admin
   }
 
