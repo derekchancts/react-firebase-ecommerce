@@ -1,6 +1,7 @@
 import { auth, GoogleProvider } from '../../firebase/utils';
 
 
+/*
 export const handleResetPasswordAPI = (email) => {
   const config = {
     url: 'http://localhost:3000/login',
@@ -25,9 +26,41 @@ export const handleResetPasswordAPI = (email) => {
     });
   });
 }
+*/
+export const handleResetPasswordAPI = (email) => {
+  const config = {
+    url: 'http://localhost:3000/login',
+  };
+
+  return new Promise((resolve, reject) => {
+    auth.sendPasswordResetEmail(email, config)
+    .then(() => {
+        resolve();
+      })
+      .catch(() => {
+        const err = ['Email not found. Please try again'];
+        reject(err);
+    });
+  });
+}
 
 
 
+export const handleGoogleSignIn = () => {
+  return new Promise((resolve, reject) => {
+    auth.signInWithPopup(GoogleProvider)
+    .then(() => {
+      resolve()
+    }).catch((err) => {
+      reject(err)
+    })
+  })
+}
+
+
+
+
+/*
 export const handleGoogleSignIn = () => {
 
   return new Promise((resolve, reject) => {
@@ -57,3 +90,4 @@ export const handleGoogleSignIn = () => {
   //   console.log(error)
   // }
 }
+*/
