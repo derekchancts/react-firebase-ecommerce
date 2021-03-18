@@ -24,6 +24,42 @@
       }
     }
 
+
+    nav {
+      display: block;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      height: 100%;   // (to center this vertically on the page)
+
+      ul, ul li {
+        padding: 0;
+        margin: 0;
+        height: 100%;   // (to center this vertically on the page)
+      }
+
+      ul {
+        text-align: center;
+        li {
+          display: inline-block;
+          list-style-type: none;
+          margin: 0 1rem;
+
+          a {
+            font-size: 1.8rem;
+            // line-height: 1;
+            // line-height: 100%;
+            line-height: 6.5rem;  // same height as the header (to center this vertically on the page)
+            vertical-align: middle;
+            color: black;
+            text-decoration: none;
+            text-transform: uppercase;
+          }
+        }
+      }
+    }
+
+
     // .callToActions {
     //   position: absolute;
     //   top:50%;

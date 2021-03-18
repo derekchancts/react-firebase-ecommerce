@@ -1,8 +1,10 @@
 import { takeLatest, call, all, put } from 'redux-saga/effects';
 import {auth, handleUserProfile, GoogleProvider, getCurrentUser} from '../../firebase/utils';
 import userTypes from './user.types';
-import { signInSuccess, signOutSuccess, userError, resetPasswordStart, reserPasswordSuccess} from './user.actions';
-import { handleResetPasswordAPI, handleGoogleSignIn } from './user.helpers';
+// import { signInSuccess, signOutSuccess, userError, resetPasswordStart, reserPasswordSuccess} from './user.actions';
+import { signInSuccess, signOutSuccess, userError, reserPasswordSuccess} from './user.actions';
+// import { handleResetPasswordAPI, handleGoogleSignIn } from './user.helpers';
+import { handleResetPasswordAPI } from './user.helpers';
 
 
 // additionalData added as an empty object if we do not provide it in the parameters
