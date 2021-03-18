@@ -7,8 +7,9 @@ export const addProductStart = productData => ({
 })
 
 
-export const fetchProductsStart = () => ({
+export const fetchProductsStart = ( filters={} ) => ({   // if nothing is passed, then filters will be assigned an empty object
   type: productsTypes.FETCH_PRODUCTS_START,
+  payload: filters
 })
 
 
