@@ -30,6 +30,7 @@ import Login from './pages/Login';
 import Recovery from './pages/Recovery';
 import Dashboard from './pages/Dashboard'; 
 import Admin from './pages/Admin'; 
+import Search from './pages/Search'; 
 import './default.scss';
 
 const App = (props) => {
@@ -107,6 +108,15 @@ const App = (props) => {
             </HomepageLayout>
           )}
         />
+
+        <Route 
+          path="/search" 
+          render={() => (
+            <MainLayout>
+              <Search />
+            </MainLayout>
+          )}
+        /> 
 
         <Route
           path='/registration'
