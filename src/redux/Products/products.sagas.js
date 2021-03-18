@@ -31,9 +31,9 @@ export function* onAddProductStart() {
 
 
 
-export function* fetchProducts() {
+export function* fetchProducts({ payload: { filterType } }) {
   try {
-    const products =  yield handleFetchProducts();
+    const products =  yield handleFetchProducts({ filterType });
     yield put(setProducts(products))
   } catch (err) {
     console.log(err)
@@ -59,7 +59,7 @@ export function* onDeleteProductStart() {
   yield takeLatest(productsTypes.DELETE_PRODUCTS_START, deleteProduct)
 }
 
-
+ 
 
 export default function* productSagas() {
   yield all([
