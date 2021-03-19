@@ -31,9 +31,20 @@ export function* onAddProductStart() {
 
 
 
-export function* fetchProducts({ payload: { filterType } }) {
+// export function* fetchProducts({ payload: { filterType } }) {
+//   try {
+//     const products =  yield handleFetchProducts({ filterType });
+//     yield put(setProducts(products))
+//   } catch (err) {
+//     console.log(err)
+//   }
+// }
+
+// We are already destructuring the payload in our helper function "handleFetchProducts"
+// so, there's no need to destructure again. So, we just pass in our payload here.
+export function* fetchProducts({ payload }) {  
   try {
-    const products =  yield handleFetchProducts({ filterType });
+    const products =  yield handleFetchProducts(payload);
     yield put(setProducts(products))
   } catch (err) {
     console.log(err)

@@ -4,9 +4,9 @@ import { useHistory, useParams } from 'react-router-dom';
 import { fetchProductsStart } from '../../redux/Products/products.actions'; 
 import Product from './Product';
 import FormSelect from '../forms/FormSelect';
+import LoadMore from '../LoadMore';
 import './styles.scss';
 
- 
 
 const mapState = ({ productsData }) => ({
   products: productsData.products
@@ -18,6 +18,8 @@ const ProductResults = () => {
   const history = useHistory();
   const { filterType } = useParams();
   const { products } = useSelector(mapState);
+
+  const { data, queryDoc, isLastPage } = products;
 
 
   useEffect(() => {
@@ -34,9 +36,20 @@ const ProductResults = () => {
 
 
   
-  if (!Array.isArray(products)) return null;
+  
+  // if (!Array.isArray(products)) return null;
 
-  if (products.length < 1) {
+  // if (products.length < 1) {
+  //   return (
+  //     <div className="products">
+  //       No serach results
+  //     </div>
+  //   );
+  // }
+
+  if (!Array.isArray(data)) return null;
+
+  if (data.length < 1) {
     return (
       <div className="products">
         No serach results
@@ -61,6 +74,25 @@ const ProductResults = () => {
   };
 
 
+
+  const handleLoadMore = () => {
+    dispatch(
+      fetchProductsStart({ 
+        filterType, 
+        startAfterDoc: queryDoc,
+        persistProducts: data
+    }));    
+    // console.log('handleLoadMore fired:')
+    // console.log(`${queryDoc}`)
+  };
+
+  const configLoadMore = {
+    onLoadMoreEvt: handleLoadMore,
+    isLastPage
+  }
+
+
+
   return ( 
     <div className="products">
 
@@ -68,13 +100,11 @@ const ProductResults = () => {
         Browse Products
       </h1>
 
-
       <FormSelect {...configFilters} />
-
 
       <div className="productResults">
         {
-          products.map((product, pos) => {
+          data.map((product, pos) => {
             const { productName, productThumbnail, productPrice } = product;
             if (!productThumbnail || !productName || 
                 typeof productPrice === 'undefined') return null; 
@@ -96,6 +126,11 @@ const ProductResults = () => {
           })
         }
       </div>
+
+      {
+        !isLastPage && <LoadMore {...configLoadMore}/>
+      }
+      
 
     </div>
    );

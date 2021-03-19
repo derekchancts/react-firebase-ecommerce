@@ -8,6 +8,7 @@ import Button from './../../components/forms/Button';
 // import LoadMore from './../../components/LoadMore';
 // import CKEditor from 'ckeditor4-react';
 import './styles.scss';
+import LoadMore from '../../components/LoadMore';
 
 const mapState = ({ productsData }) => ({
   products: productsData.products
@@ -24,7 +25,7 @@ const Admin = props => {
   const [productPrice, setProductPrice] = useState(0);
   // const [productDesc, setProductDesc] = useState('');
 
-  // const { data, queryDoc, isLastPage } = products;
+  const { data, queryDoc, isLastPage } = products;
 
   useEffect(() => {
     dispatch(
@@ -83,6 +84,38 @@ const Admin = props => {
   // const configLoadMore = {
   //   onLoadMoreEvt: handleLoadMore,
   // };
+
+
+  // const configFilters = {
+  //   defaultValue: filterType,
+  //   options: [{
+  //     name: 'Show all',
+  //     value: ''
+  //   }, {
+  //     name: 'Mens',
+  //     value: 'mens'
+  //   }, {
+  //     name: 'Womens',
+  //     value: 'womens'
+  //   }],
+  //   handleChange: handleFilter
+  // };
+
+
+  const handleLoadMore = () => {
+    dispatch(
+      fetchProductsStart({ 
+        // filterType, 
+        startAfterDoc: queryDoc,
+        persistProducts: data
+    }));    
+  };
+
+  const configLoadMore = {
+    onLoadMoreEvt: handleLoadMore
+  }
+
+
 
   return (
     <div className="admin">
@@ -172,7 +205,8 @@ const Admin = props => {
                 {/* <table border="0" cellPadding="10" cellSpacing="0"> */}
                 <table className="results" border="0" cellPadding="10" cellSpacing="0">
                   <tbody>
-                    {products && products.map((product, index) => {
+                    {/* {products && products.map((product, index) => { */}
+                    {data && data.map((product, index) => {
                       const { 
                         productName,
                         productThumbnail,
@@ -203,8 +237,31 @@ const Admin = props => {
                 </table>
               </td>
             </tr>
+            <tr>
+              <td>
+                
+              </td>
+            </tr>
+            <tr>
+              <td>
+                 <table border="0" cellPadding="10" cellSpacing="0"> 
+                   <tbody>
+                     <tr>
+                       <td>
+                         { !isLastPage && <LoadMore {...configLoadMore}/> }
+                       </td>
+                     </tr>
+                   </tbody>
+                 </table>
+              </td>
+            </tr>
           </tbody>
         </table>
+
+        {/* {
+          !isLastPage && <LoadMore {...configLoadMore}/>
+        }
+       */}
 
       </div>
 
