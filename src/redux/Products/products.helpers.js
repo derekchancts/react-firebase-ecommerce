@@ -17,23 +17,43 @@ export const handleAddProduct = product => {
 }
 
 
-export const handleFetchProducts = ({ filterType }) => {
+export const handleFetchProducts = ({ filterType, startAfterDoc, persistProducts=[] }) => {
   return new Promise((resolve, reject) => {
+    const pageSize = 6;
 
-    let ref = firestore.collection('products').orderBy('createdDate');
+    let ref = firestore.collection('products').orderBy('createdDate').limit(pageSize);
 
     if (filterType) ref = ref.where('productCategory', '==', filterType);
+
+    // If this exists, this means we clicked on "LoadMore"
+    if (startAfterDoc) ref = ref.startAfter(startAfterDoc)
     
     ref
       .get()
       .then((snapshot) => {
-        const productsArray = snapshot.docs.map(doc => {
-          return {
-           ...doc.data(),
-            documentID: doc.id
-          }
+        const totalCount = snapshot.size;
+        // console.log(`totalCount: ${totalCount}`)   
+
+        const data = [
+          ...persistProducts,
+          ...snapshot.docs.map(doc => {
+            return {
+             ...doc.data(),
+              documentID: doc.id
+            }
+          })
+        ];
+
+        // returns an object instead {previously it was an array)
+        resolve({
+          data,
+                // snapshot.docs - gives the complete array of all the documents (6 in this case) from this query 
+                // snapshot.docs[totalCount - 1] - this will give us the last element of the array
+          queryDoc: snapshot.docs[totalCount - 1],
+          // queryDoc: snapshot.docs.length - 1,
+          isLastPage: totalCount < 1   // returns a Boolean value
+          // isLastPage: totalCount < pageSize
         });
-        resolve(productsArray);
       })
       .catch(err => {
         reject(err)
