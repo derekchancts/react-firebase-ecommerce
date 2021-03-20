@@ -31,12 +31,13 @@
       margin: 0;
     }
   }
-
+ 
   .details {
     display: block;
     width: 100%;
     padding: 1rem 0;
     margin: 0, auto;
+
 
     ul, ul li {
       padding: 0;
@@ -50,6 +51,10 @@
         width: 100%;
         margin: 0 0 .5rem;
         text-align: left; 
+
+        a {
+          color: black;
+        }
 
         // &.name = a class on the li above (if we use this)
         .name {

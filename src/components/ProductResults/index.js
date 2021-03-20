@@ -19,7 +19,7 @@ const ProductResults = () => {
   const { filterType } = useParams();
   const { products } = useSelector(mapState);
 
-  const { data, queryDoc, isLastPage } = products;
+  const { data, queryDoc, isLastPage, documentID } = products;
 
 
   useEffect(() => {
@@ -35,7 +35,7 @@ const ProductResults = () => {
   };
 
 
-  
+   
   
   // if (!Array.isArray(products)) return null;
 
@@ -111,9 +111,11 @@ const ProductResults = () => {
                 // price can be 0 / zero and it will validate to a false. So, use 'undefined' instead.
 
                 const configProduct = {
-                  productName, 
-                  productThumbnail,
-                  productPrice
+                  // productName, 
+                  // productThumbnail,
+                  // productPrice,
+                  // documentID
+                  ... product
                 };
 
             return (
