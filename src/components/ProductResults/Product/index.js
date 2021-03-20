@@ -1,9 +1,10 @@
 import Button from '../../forms/Button';
+import { Link } from 'react-router-dom';
 
 
-const Product = ({ productName, productThumbnail, productPrice, pos }) => {
+const Product = ({ productName, productThumbnail, productPrice, documentID, pos }) => {
 
-  if (!productThumbnail || !productName || 
+  if (!documentID || !productThumbnail || !productName || 
     typeof productPrice === 'undefined') return null; 
     // price can be 0 / zero and it will validate to a false. So, use 'undefined' instead.
 
@@ -16,14 +17,18 @@ const Product = ({ productName, productThumbnail, productPrice, pos }) => {
   return ( 
     <div className="product" key={pos}>
       <div className="thumb">
-        <img src={productThumbnail} alt={productName} />
+        <Link to={`/product/${documentID}`}>
+          <img src={productThumbnail} alt={productName} />
+        </Link>
       </div>
 
       <div className="details">
         <ul>
           <li>
             <span className="name">
-              {productName}
+              <Link to={`/product/${documentID}`}>
+                {productName}
+              </Link>
             </span>
           </li>
           <li>
