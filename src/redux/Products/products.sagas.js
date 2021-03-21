@@ -2,24 +2,27 @@ import { auth } from '../../firebase/utils';
 import {takeLatest, put, all, call} from 'redux-saga/effects';
 import productsTypes from './products.types';
 import { setProducts, fetchProductsStart, setProduct } from './products.actions';
-import { 
+import {  
   handleAddProduct, 
   handleFetchProducts, 
   handleDeleteProduct,
   handleFetchProduct
  } from './products.helpers';
 
- 
+
 export function* addProduct({
-  payload: {productCategory, productName, productThumbnail, productPrice},
+  // payload: {productCategory, productName, productThumbnail, productPrice, productDesc},
+  payload
 }) {
   try {
     const timestamp = new Date();
     yield handleAddProduct({
-      productCategory,
-      productName,
-      productThumbnail,
-      productPrice,
+      // productCategory,
+      // productName,
+      // productThumbnail,
+      // productPrice,
+      // productDesc,
+      ...payload,
       productAdminUserUID: auth.currentUser.uid,
       createdDate: timestamp
     });

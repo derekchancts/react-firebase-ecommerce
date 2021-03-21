@@ -16,7 +16,7 @@ const ProductCard = () => {
   const { productID } = useParams();
 
   const { product } = useSelector(mapState);
-  const { productName, productThumbnail, productPrice, documentID } = product;
+  const { productName, productThumbnail, productPrice, productDesc, documentID } = product;
   // const { product: { productName, productThumbnail, productPrice, documentID }} = useSelector(mapState);
 
   useEffect(() => {
@@ -59,6 +59,11 @@ const ProductCard = () => {
                 Add to cart
              </Button>
            </div>
+         </li>
+         <li>
+           <span 
+            dangerouslySetInnerHTML={{ __html: productDesc }} 
+           />
          </li>
        </ul>
      </div>
