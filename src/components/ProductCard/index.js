@@ -2,8 +2,10 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { fetchProductStart, setProduct } from '../../redux/Products/products.actions'; 
+import { addProduct } from '../../redux/Cart/cart.actions'
 import Button from '../forms/Button';
 import './styles.scss';
+import { handleAddToCart } from '../../redux/Cart/cart.utils';
 
 
 const mapState = ({ productsData }) => ({
@@ -21,6 +23,8 @@ const ProductCard = () => {
 
   useEffect(() => {
     dispatch(fetchProductStart(productID))
+    // console.log(`productID: ${productID}`)
+    // console.log(`documentID: ${documentID}`)
   }, [])
 
 
@@ -35,6 +39,12 @@ const ProductCard = () => {
 
   const configAddToCartBtn = {
     type:'button'
+  }
+
+
+  const handleAddToCart = product => {
+    if (!product) return;
+    dispatch(addProduct(product));
   }
 
 
@@ -55,7 +65,7 @@ const ProductCard = () => {
          </li>
          <li>
            <div className="addToCart">
-             <Button {...configAddToCartBtn}>
+             <Button {...configAddToCartBtn} onClick={() => handleAddToCart(product)}>
                 Add to cart
              </Button>
            </div>

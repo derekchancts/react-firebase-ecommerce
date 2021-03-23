@@ -1,12 +1,12 @@
 // import { useEffect } from 'react';
 // import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 // import { signoutUser } from '../../redux/User/user.actions';
 import { signOutStart } from '../../redux/User/user.actions';
+import { selectCartItemsCount } from '../../redux/Cart/cart.selectors';
 import './styles.scss';
-import {Link} from 'react-router-dom';
-import {auth} from '../../firebase/utils';
-
+// import {auth} from '../../firebase/utils';
 import Logo from '../../assets/logo.png';
 
 
@@ -14,14 +14,16 @@ import Logo from '../../assets/logo.png';
 //   currentUser: user.currentUser
 // })
 
-const mapState = ({ user }) => ({
-  currentUser: user.currentUser
+// const mapState = ({ user, cartData }) => ({
+const mapState = (state) => ({
+  currentUser: state.user.currentUser,
+  totalNumCartItems: selectCartItemsCount(state)
 })
 
 
 const Header = (props) => {
   // const {currentUser} = props;
-  const {currentUser} = useSelector(mapState);
+  const { currentUser, totalNumCartItems } = useSelector(mapState);
   const dispatch = useDispatch();
 
 
@@ -56,20 +58,50 @@ const Header = (props) => {
         </nav>
 
         <div className='callToActions'>
-          {currentUser && (
+
+
+        <ul>
+
+          <li>
+            <Link>
+              Your Cart ({totalNumCartItems})
+            </Link>
+          </li>
+
+          {currentUser && [
+            <li>
+              <Link to='/dashboard'>My Account</Link>
+            </li>,
+            <li>
+              <span onClick={handleSignOut}>LogOut</span>
+            </li>
+          ]}
+
+          {!currentUser && [
+            <li>
+              <Link to='/registration'>Register</Link>
+            </li>,
+            <li>
+              <Link to='/login'>Login</Link>
+            </li>
+          ]}  
+
+        </ul>
+
+
+        {/* {currentUser && (
             <ul>
               <li>
                 <Link to='/dashboard'>My Account</Link>
               </li>
               <li>
-                {/* <span onClick={() => auth.signOut()}>LogOut</span> */}
-                {/* <span onClick={handleSignOut}>LogOut</span> */}
                 <span onClick={handleSignOut}>LogOut</span>
               </li>
             </ul>
-          )}
+          )} */}
 
-          {!currentUser && (
+
+          {/* {!currentUser && (
             <ul>
               <li>
                 <Link to='/registration'>Register</Link>
@@ -78,7 +110,9 @@ const Header = (props) => {
                 <Link to='/login'>Login</Link>
               </li>
             </ul>
-          )}  
+          )}   */}
+
+
         </div>
       </div>
     </header>
