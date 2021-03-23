@@ -115,7 +115,7 @@ const ProductResults = () => {
                   // productThumbnail,
                   // productPrice,
                   // documentID
-                  ... product
+                  ...product
                 };
 
             return (
