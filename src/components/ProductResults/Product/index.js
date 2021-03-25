@@ -56,13 +56,14 @@
 
 
 import Button from "../../forms/Button";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 import { addProduct } from '../../../redux/Cart/cart.actions'
 
 
 const Product = (product) => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const { productName,
     productThumbnail,
@@ -87,6 +88,7 @@ const Product = (product) => {
   const handleAddToCart = (product) => {
     if (!product) return;
     dispatch(addProduct(product));
+    history.push('/cart');
   };
 
 

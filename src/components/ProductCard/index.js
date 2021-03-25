@@ -16,6 +16,7 @@ const mapState = ({ productsData }) => ({
 const ProductCard = () => {
   const dispatch = useDispatch();
   const { productID } = useParams();
+  const history = useHistory();
 
   const { product } = useSelector(mapState);
   const { productName, productThumbnail, productPrice, productDesc, documentID } = product;
@@ -45,6 +46,7 @@ const ProductCard = () => {
   const handleAddToCart = product => {
     if (!product) return;
     dispatch(addProduct(product));
+    history.push('/cart');
   }
 
 
