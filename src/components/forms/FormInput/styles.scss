@@ -1,6 +1,7 @@
 .formRow {
 
-  input {
+  input,
+  &.checkoutInput select {   //if this(formRow class) has an additional class of "checkoutInput", then target the select
     display: block;
     width: 100%;
     padding: 10px 5px;

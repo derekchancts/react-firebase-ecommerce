@@ -33,7 +33,10 @@ import Admin from './pages/Admin';
 import Search from './pages/Search'; 
 import ProductDetails from './pages/ProductDetails'; 
 import Cart from './pages/Cart';
+import Payment from './pages/Payment';
+
 import './default.scss';
+
 
 const App = (props) => {
   // authListener = null;
@@ -144,6 +147,17 @@ const App = (props) => {
             <MainLayout>
               <Cart />
             </MainLayout>
+          )}
+        /> 
+
+        <Route 
+          path="/payment" 
+          render={() => (
+            <WithAuth>
+              <MainLayout>
+                <Payment />
+              </MainLayout>
+            </WithAuth>
           )}
         /> 
 
