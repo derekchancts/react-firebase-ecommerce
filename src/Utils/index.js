@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 
 export const checkUserIsAdmin = currentUser => {
    // see if user exist. If so, does it have the userRoles array
@@ -6,7 +8,6 @@ export const checkUserIsAdmin = currentUser => {
     return false; 
   } 
 
-
   const { userRoles } = currentUser;
   if (userRoles.includes('admin')) {
     console.log('Admin role')
@@ -14,4 +15,11 @@ export const checkUserIsAdmin = currentUser => {
   }
 
   return false;
-}
+};
+
+
+
+export const apiInstance = axios.create({
+  baseURL: 'http://localhost:5001/react-firebase-ecommerce-8e556/us-central1/api'
+});
+
