@@ -8,15 +8,15 @@ import Button from '../forms/Button';
 import { CountryDropdown } from 'react-country-region-selector';
 import { apiInstance } from '../../Utils';
 
-import { selectCartTotal, selectCartItemsCount } from '../../redux/Cart/cart.selectors.js';
-import { clearCart } from '../../redux/Cart/cart.actions';
+import { selectCartTotal, selectCartItemsCount, selectCartItems } from '../../redux/Cart/cart.selectors.js';
+// import { clearCart } from '../../redux/Cart/cart.actions';
+import { saveOrderHistory } from '../../redux/Orders/orders.actions';
 import { createStructuredSelector } from 'reselect';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { useHistory } from 'react-router-dom';
 
 import './styles.scss';
-
 
 
 
@@ -33,7 +33,8 @@ const initialAddressState = {
 
 const mapState = createStructuredSelector({
   total: selectCartTotal,
-  itemCount: selectCartItemsCount
+  itemCount: selectCartItemsCount,
+  cartItems: selectCartItems
 })
 
 
@@ -41,7 +42,7 @@ const PaymentDetails = () => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const { total, itemCount } = useSelector(mapState);
+  const { total, itemCount, cartItems } = useSelector(mapState);
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -53,10 +54,11 @@ const PaymentDetails = () => {
 
 
 
-  // If ClearCart function is successful, then we want to redirect the user to the homepage
+  // If ClearCart function is successful, then we want to redirect the user to the (homepage). Now to dashboard
   useEffect(() => {
     if (itemCount < 1) {
-      history.push('/');
+      // history.push('/');
+      history.push('/dashboard');
     }
   }, [itemCount])
 
@@ -120,7 +122,24 @@ const PaymentDetails = () => {
         })
         .then(({ paymentIntent }) => {   // paymentIntent - this include the details about the transaction
           // console.log(paymentIntent)
-          dispatch(clearCart());
+          // dispatch(clearCart());
+
+          const configOrder = {
+            orderTotal: total,
+            orderItems: cartItems.map(item => {
+              const { documentID, productThumbnail, productName, productPrice, quantity } = item;
+
+              return {
+                documentID, 
+                productThumbnail, 
+                productName, 
+                productPrice, 
+                quantity 
+              }
+            })
+          }
+
+          dispatch(saveOrderHistory(configOrder));
 
         })
 
@@ -295,7 +314,7 @@ const PaymentDetails = () => {
           />
         </div>
 
-        <Button type="submit">PAy Now</Button>
+        <Button type="submit">Pay Now</Button>
 
       </form>
     </div>
