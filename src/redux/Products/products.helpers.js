@@ -43,7 +43,7 @@ export const handleFetchProducts = ({ filterType, startAfterDoc, persistProducts
             }
           })
         ];
- 
+
         // returns an object instead {previously it was an array)
         resolve({
           data,

@@ -7,6 +7,7 @@ import storage from 'redux-persist/lib/storage';   // localStorage object from w
 import userReducer from './User/user.reducer';
 import productsReducer from './Products/products.reducer';
 import cartReducer from './Cart/cart.reducer';
+import orderReducer from './Orders/orders.reducer';
 
 
 // export default combineReducers({
@@ -18,7 +19,8 @@ import cartReducer from './Cart/cart.reducer';
 export const rootReducer = combineReducers({
   user: userReducer,
   productsData: productsReducer,
-  cartData: cartReducer
+  cartData: cartReducer,
+  ordersData: orderReducer
 });
 
 

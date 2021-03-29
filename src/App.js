@@ -34,6 +34,7 @@ import Search from './pages/Search';
 import ProductDetails from './pages/ProductDetails'; 
 import Cart from './pages/Cart';
 import Payment from './pages/Payment';
+import Order from './pages/Order';
 
 import './default.scss';
 
@@ -188,6 +189,7 @@ const App = (props) => {
             </MainLayout>
           }
         />
+
         <Route
           path='/dashboard'
           render={() =>
@@ -198,6 +200,19 @@ const App = (props) => {
             </WithAuth>
           }
         />
+
+        <Route 
+          path='/order/:orderID'
+          render={() => 
+            <WithAuth>
+              <DashBoardLayout>
+                <Order />
+              </DashBoardLayout>
+            </WithAuth>
+          }
+        />
+
+
          <Route
           path='/admin'
           render={() =>

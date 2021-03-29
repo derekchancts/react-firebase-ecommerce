@@ -5,7 +5,7 @@ import { fetchProductStart, setProduct } from '../../redux/Products/products.act
 import { addProduct } from '../../redux/Cart/cart.actions'
 import Button from '../forms/Button';
 import './styles.scss';
-import { handleAddToCart } from '../../redux/Cart/cart.utils';
+
 
 
 const mapState = ({ productsData }) => ({
